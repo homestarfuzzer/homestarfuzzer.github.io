@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://homestarfuzzer.github.io/sitemap.xml
