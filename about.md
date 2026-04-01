@@ -9,9 +9,7 @@ permalink: /about/
 
 <h2>whoami</h2>
 
-<p>I'm Austin McNett, a SOC Analyst with a background in detection engineering
-and incident response. I spend my off hours grinding CTFs, labbing offensive
-techniques, and documenting what I pick up along the way.</p>
+<p>I work in a SOC. Outside of that I'm studying offensive security, playing CTFs, and writing about what sticks.</p>
 
 <p>I go by <strong>homestarfuzzer</strong> online.</p>
 
@@ -36,14 +34,13 @@ techniques, and documenting what I pick up along the way.</p>
     <ul class="skill-card__items">
       <li>Web App Pentesting</li>
       <li>Network Exploitation</li>
-      <li>Binary Exploitation</li>
       <li>Reverse Engineering</li>
     </ul>
   </div>
   <div class="skill-card">
     <span class="skill-card__label">Defensive</span>
     <ul class="skill-card__items">
-      <li>SIEM / Splunk ES</li>
+      <li>SIEM</li>
       <li>Alert Triage</li>
       <li>Detection Engineering</li>
       <li>Incident Response</li>
@@ -53,9 +50,9 @@ techniques, and documenting what I pick up along the way.</p>
     <span class="skill-card__label">Tools</span>
     <ul class="skill-card__items">
       <li>Burp Suite</li>
-      <li>Metasploit</li>
+      <li>Splunk ES</li>
       <li>CrowdStrike Falcon</li>
-      <li>Nmap / Masscan</li>
+      <li>Nmap</li>
     </ul>
   </div>
   <div class="skill-card">
@@ -63,8 +60,7 @@ techniques, and documenting what I pick up along the way.</p>
     <ul class="skill-card__items">
       <li>HackTheBox</li>
       <li>TryHackMe</li>
-      <li>CTFtime</li>
-      <li>Linux / BSD</li>
+      <li>PortSwigger</li>
     </ul>
   </div>
 </div>
