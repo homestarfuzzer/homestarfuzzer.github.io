@@ -1,0 +1,86 @@
+---
+layout: default
+---
+
+<article class="post writeup">
+  <header class="post__header writeup__header">
+    <div class="container">
+      <div class="post__meta">
+        <span class="post__category writeup-badge">
+          {%- if page.ctf %}CTF &mdash; {{ page.ctf }}{%- elsif page.category %}{{ page.category }}{%- else %}Writeup{%- endif %}
+        </span>
+        <time class="post__date" datetime="{{ page.date | date_to_xmlschema }}">
+          {{ page.date | date: "%B %-d, %Y" }}
+        </time>
+        {%- if page.difficulty %}
+          <span class="difficulty difficulty--{{ page.difficulty | downcase }}">{{ page.difficulty }}</span>
+        {%- endif %}
+      </div>
+
+      <h1 class="post__title">{{ page.title }}</h1>
+
+      {%- if page.description %}
+        <p class="post__excerpt">{{ page.description }}</p>
+      {%- endif %}
+
+      {%- if page.tags.size > 0 %}
+        <div class="post__tags">
+          {%- for tag in page.tags %}
+            <span class="tag">{{ tag }}</span>
+          {%- endfor %}
+        </div>
+      {%- endif %}
+
+      {%- if page.tools.size > 0 %}
+        <div class="writeup__tools">
+          <span class="tools-label">Tools:</span>
+          {%- for tool in page.tools %}
+            <code class="tool-badge">{{ tool }}</code>
+          {%- endfor %}
+        </div>
+      {%- endif %}
+    </div>
+  </header>
+
+  <div class="post__body container">
+    {%- if page.toc %}
+      <nav class="toc">
+        <h2 class="toc__title">Contents</h2>
+        {{ content | toc_only }}
+      </nav>
+    {%- endif %}
+
+    {{ content }}
+  </div>
+
+  <footer class="post__footer container">
+    <div class="post__nav">
+      {%- assign prev = nil %}
+      {%- assign next = nil %}
+      {%- for writeup in site.writeups reversed %}
+        {%- if prev_found %}
+          {%- assign next = writeup %}
+          {%- break %}
+        {%- endif %}
+        {%- if writeup.url == page.url %}
+          {%- assign prev_found = true %}
+        {%- else %}
+          {%- assign prev = writeup %}
+        {%- endif %}
+      {%- endfor %}
+
+      {%- if prev %}
+        <a class="post__nav-prev" href="{{ prev.url | relative_url }}">
+          <span class="nav-label">← Previous Writeup</span>
+          <span class="nav-title">{{ prev.title }}</span>
+        </a>
+      {%- endif %}
+      {%- if next %}
+        <a class="post__nav-next" href="{{ next.url | relative_url }}">
+          <span class="nav-label">Next Writeup →</span>
+          <span class="nav-title">{{ next.title }}</span>
+        </a>
+      {%- endif %}
+    </div>
+  </footer>
+</article>
