@@ -21,7 +21,7 @@ author:
 theme: null            # we use a fully custom theme
 permalink: /:year/:month/:day/:title/
 paginate: 10
-paginate_path: "/page/:num/"
+paginate_path: "/blog/page/:num/"
 
 # ─── Markdown ─────────────────────────────────────────────────────────────────
 markdown: kramdown
