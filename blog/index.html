@@ -33,6 +33,8 @@ permalink: /blog/
         {%- endif %}
       </nav>
     {%- endif %}
+ {%- elsif site.posts.size > 0 %}
+    {% include post-list.html posts=site.posts type="post" %}
   {%- else %}
     <p style="color: var(--text-muted); font-family: var(--font-mono);">
       // No posts yet. Check back soon.
