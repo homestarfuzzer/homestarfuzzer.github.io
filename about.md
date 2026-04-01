@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About
-description: Austin McNett — security researcher, builder of things.
+description: Austin McNett — security analyst, CTF player, perpetual learner.
 permalink: /about/
 ---
 
@@ -9,21 +9,20 @@ permalink: /about/
 
 ## whoami
 
-I'm Austin McNett, a security researcher and software developer with a focus on
-offensive security, vulnerability research, and building tools that make breaking
-things easier.
+I'm Austin McNett, a SOC Analyst with a background in detection engineering
+and incident response. I spend my off hours grinding CTFs, labbing offensive
+techniques, and documenting what I pick up along the way.
 
-I go by **homestarfuzzer** online. I spend my time hunting bugs, competing in CTFs,
-and automating things that shouldn't be automated.
+I go by **homestarfuzzer** online.
 
 ---
 
 ## What I Do
 
-- **Penetration Testing** — web apps, APIs, internal networks
+- **SOC Analysis** — alert triage, detection engineering, incident response
 - **CTF Competitions** — mostly web, pwn, and crypto
-- **Vulnerability Research** — finding and responsibly disclosing security flaws
-- **Tool Development** — scripts, fuzzers, and automation
+- **Offensive Security** — actively studying and labbing
+- **Certifications** — Security+, PenTest+
 
 ---
 
@@ -40,12 +39,12 @@ and automating things that shouldn't be automated.
     </ul>
   </div>
   <div class="skill-card">
-    <span class="skill-card__label">Languages</span>
+    <span class="skill-card__label">Defensive</span>
     <ul class="skill-card__items">
-      <li>Python</li>
-      <li>Bash</li>
-      <li>C / C++</li>
-      <li>JavaScript</li>
+      <li>SIEM / Splunk ES</li>
+      <li>Alert Triage</li>
+      <li>Detection Engineering</li>
+      <li>Incident Response</li>
     </ul>
   </div>
   <div class="skill-card">
@@ -53,7 +52,7 @@ and automating things that shouldn't be automated.
     <ul class="skill-card__items">
       <li>Burp Suite</li>
       <li>Metasploit</li>
-      <li>Ghidra / IDA</li>
+      <li>CrowdStrike Falcon</li>
       <li>Nmap / Masscan</li>
     </ul>
   </div>
