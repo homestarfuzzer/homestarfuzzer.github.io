@@ -1,0 +1,42 @@
+{
+  "name": "Jekyll / GitHub Pages",
+  "image": "mcr.microsoft.com/devcontainers/ruby:3.3",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  },
+  "forwardPorts": [4000],
+  "portsAttributes": {
+    "4000": {
+      "label": "Jekyll Site",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "postCreateCommand": "bundle install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "sissel.shopify-liquid",
+        "yzhang.markdown-all-in-one",
+        "davidanson.vscode-markdownlint",
+        "ms-vscode.live-server",
+        "redhat.vscode-yaml"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[markdown]": {
+          "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+        },
+        "files.associations": {
+          "*.html": "html",
+          "**/_layouts/*.html": "liquid",
+          "**/_includes/*.html": "liquid"
+        },
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+  "remoteUser": "vscode"
+}

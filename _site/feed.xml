@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-04-01T03:16:22+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">homestarfuzzer</title><subtitle>Security research, CTF writeups, and notes from a hacker who likes to break things and document what&apos;s left.</subtitle><author><name>Austin McNett</name><email></email></author><entry><title type="html">Setting Up a Fuzzing Lab with AFL++ and Docker</title><link href="http://localhost:4000/2026/02/10/fuzzing-lab-afl/" rel="alternate" type="text/html" title="Setting Up a Fuzzing Lab with AFL++ and Docker" /><published>2026-02-10T00:00:00+00:00</published><updated>2026-02-10T00:00:00+00:00</updated><id>http://localhost:4000/2026/02/10/fuzzing-lab-afl</id><content type="html" xml:base="http://localhost:4000/2026/02/10/fuzzing-lab-afl/"><![CDATA[<p>Fuzzing is one of the highest-leverage things you can do to find bugs in software
+you don’t have source access to — and even in software you do. Here’s the lab
+setup I’ve settled on after a lot of trial and error.</p>
+
+<h2 id="why-docker">Why Docker?</h2>
+
+<p>Fuzzing writes a <em>lot</em> of files, thrashes disk I/O, and can destabilize the host
+if you’re not careful. Containerizing it keeps things isolated and reproducible.</p>
+
+<h2 id="dockerfile">Dockerfile</h2>
+
+<div class="language-dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> ubuntu:22.04</span>
+
+<span class="k">ENV</span><span class="s"> DEBIAN_FRONTEND=noninteractive</span>
+
+<span class="k">RUN </span>apt-get update <span class="o">&amp;&amp;</span> apt-get <span class="nb">install</span> <span class="nt">-y</span> <span class="se">\
+</span>    build-essential clang llvm lld <span class="se">\
+</span>    git cmake ninja-build <span class="se">\
+</span>    python3 python3-pip <span class="se">\
+</span>    libssl-dev <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-rf</span> /var/lib/apt/lists/<span class="k">*</span>
+
+<span class="c"># Build AFL++ from source for the latest features</span>
+<span class="k">RUN </span>git clone https://github.com/AFLplusplus/AFLplusplus /opt/aflplusplus <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> <span class="nb">cd</span> /opt/aflplusplus <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> make distrib <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> make <span class="nb">install</span>
+
+<span class="k">WORKDIR</span><span class="s"> /fuzz</span>
+</code></pre></div></div>
+
+<p>Build and run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker build <span class="nt">-t</span> fuzzer <span class="nb">.</span>
+docker run <span class="nt">-it</span> <span class="nt">--privileged</span> fuzzer
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">--privileged</code> flag lets AFL++ set CPU affinity and disable ASLR inside
+the container.</p>
+
+<h2 id="compiling-the-target">Compiling the Target</h2>
+
+<p>Use <code class="language-plaintext highlighter-rouge">afl-clang-fast</code> for best performance (LLVM-based instrumentation):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CC</span><span class="o">=</span>afl-clang-fast <span class="nv">CXX</span><span class="o">=</span>afl-clang-fast++ ./configure <span class="nt">--disable-shared</span>
+make <span class="nt">-j</span><span class="si">$(</span><span class="nb">nproc</span><span class="si">)</span>
+</code></pre></div></div>
+
+<h2 id="running-the-fuzzer">Running the Fuzzer</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> corpus/in corpus/out
+
+<span class="c"># Seed corpus — small valid inputs</span>
+<span class="nb">echo</span> <span class="s2">"test"</span> <span class="o">&gt;</span> corpus/in/seed1
+
+afl-fuzz <span class="se">\</span>
+  <span class="nt">-i</span> corpus/in <span class="se">\</span>
+  <span class="nt">-o</span> corpus/out <span class="se">\</span>
+  <span class="nt">-m</span> none <span class="se">\</span>
+  <span class="nt">--</span> ./target_binary @@
+</code></pre></div></div>
+
+<h2 id="corpus-minimization">Corpus Minimization</h2>
+
+<p>After a run, minimize the corpus to reduce redundancy before the next session:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>afl-cmin <span class="nt">-i</span> corpus/out/default/queue <span class="se">\</span>
+         <span class="nt">-o</span> corpus/minimized <span class="se">\</span>
+         <span class="nt">--</span> ./target_binary @@
+</code></pre></div></div>
+
+<h2 id="triage-with-afl-collect--gdb">Triage with afl-collect + GDB</h2>
+
+<p>When crashes are found, triage them:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for </span>f <span class="k">in </span>corpus/out/default/crashes/id<span class="k">*</span><span class="p">;</span> <span class="k">do
+  </span><span class="nb">echo</span> <span class="s2">"--- </span><span class="nv">$f</span><span class="s2"> ---"</span>
+  ./target_binary <span class="s2">"</span><span class="nv">$f</span><span class="s2">"</span> 2&gt;&amp;1 | <span class="nb">head</span> <span class="nt">-5</span>
+<span class="k">done</span>
+</code></pre></div></div>
+
+<p>For a quick root cause:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gdb <span class="nt">-batch</span> <span class="nt">-ex</span> <span class="s2">"run &lt; crash_input"</span> <span class="nt">-ex</span> <span class="s2">"bt"</span> ./target_binary
+</code></pre></div></div>
+
+<h2 id="key-tips">Key Tips</h2>
+
+<ul>
+  <li><strong>Core pattern</strong>: Set <code class="language-plaintext highlighter-rouge">/proc/sys/kernel/core_pattern</code> to <code class="language-plaintext highlighter-rouge">core</code> before fuzzing</li>
+  <li><strong>Persistent mode</strong>: Use AFL’s persistent mode for single-process targets — 10–100× faster</li>
+  <li><strong>Sanitizers</strong>: Build with <code class="language-plaintext highlighter-rouge">AddressSanitizer</code> to catch more bugs: <code class="language-plaintext highlighter-rouge">CFLAGS="-fsanitize=address"</code></li>
+</ul>]]></content><author><name>Austin McNett</name></author><category term="Tools" /><category term="fuzzing" /><category term="afl++" /><category term="docker" /><category term="automation" /><summary type="html"><![CDATA[How I set up a reproducible fuzzing environment using AFL++ inside Docker, with corpus minimization and crash triage baked in.]]></summary></entry></feed>

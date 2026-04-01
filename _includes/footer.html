@@ -1,0 +1,26 @@
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__left">
+      <span class="site-footer__copy">&copy; {{ 'now' | date: "%Y" }} {{ site.author.name }}</span>
+      <span class="site-footer__sep">//</span>
+      <a class="site-footer__rss" href="{{ '/feed.xml' | relative_url }}">RSS</a>
+    </div>
+    <div class="site-footer__links">
+      {%- if site.author.github %}
+        <a class="site-footer__link" href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          {% include icons/github.html %}
+        </a>
+      {%- endif %}
+      {%- if site.author.twitter %}
+        <a class="site-footer__link" href="https://twitter.com/{{ site.author.twitter }}" target="_blank" rel="noopener noreferrer" aria-label="Twitter/X">
+          {% include icons/twitter.html %}
+        </a>
+      {%- endif %}
+      {%- if site.author.linkedin %}
+        <a class="site-footer__link" href="https://linkedin.com/in/{{ site.author.linkedin }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          {% include icons/linkedin.html %}
+        </a>
+      {%- endif %}
+    </div>
+  </div>
+</footer>

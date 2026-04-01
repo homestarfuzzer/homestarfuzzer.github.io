@@ -1,0 +1,27 @@
+---
+layout: page
+title: Writeups
+description: CTF solutions, vulnerability research, and security challenge breakdowns.
+permalink: /writeups/
+---
+
+<div class="writeups-filter">
+  <a class="filter-btn active" href="{{ '/writeups/' | relative_url }}">All</a>
+  {%- assign categories = site.writeups | map: 'category' | compact | uniq | sort %}
+  {%- for cat in categories %}
+    <a class="filter-btn" href="#">{{ cat }}</a>
+  {%- endfor %}
+  {%- assign ctfs = site.writeups | map: 'ctf' | compact | uniq | sort %}
+  {%- for ctf in ctfs %}
+    <a class="filter-btn" href="#">{{ ctf }}</a>
+  {%- endfor %}
+</div>
+
+{%- assign writeups = site.writeups | sort: 'date' | reverse %}
+{%- if writeups.size > 0 %}
+  {% include post-list.html posts=writeups type="writeup" %}
+{%- else %}
+  <p style="color: var(--text-muted); font-family: var(--font-mono);">
+    // No writeups yet. Check back soon.
+  </p>
+{%- endif %}
