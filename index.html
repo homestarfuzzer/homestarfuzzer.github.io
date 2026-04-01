@@ -27,10 +27,6 @@ title: homestarfuzzer
       <span class="stat__number">{{ site.posts | size }}</span>
       <span class="stat__label">Blog Posts</span>
     </div>
-    <div class="stat">
-      <span class="stat__number">CVE</span>
-      <span class="stat__label">Research</span>
-    </div>
   </div>
 
   {%- assign recent_writeups = site.writeups | sort: 'date' | reverse | limit: 4 -%}
