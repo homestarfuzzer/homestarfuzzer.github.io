@@ -7,26 +7,28 @@ permalink: /about/
 
 <div style="max-width: 680px;">
 
-## whoami
+<h2>whoami</h2>
 
-I'm Austin McNett, a SOC Analyst with a background in detection engineering
+<p>I'm Austin McNett, a SOC Analyst with a background in detection engineering
 and incident response. I spend my off hours grinding CTFs, labbing offensive
-techniques, and documenting what I pick up along the way.
+techniques, and documenting what I pick up along the way.</p>
 
-I go by **homestarfuzzer** online.
+<p>I go by <strong>homestarfuzzer</strong> online.</p>
 
----
+<hr>
 
-## What I Do
+<h2>What I Do</h2>
 
-- **SOC Analysis** — alert triage, detection engineering, incident response
-- **CTF Competitions** — mostly web, pwn, and crypto
-- **Offensive Security** — actively studying and labbing
-- **Certifications** — Security+, PenTest+
+<ul>
+  <li><strong>SOC Analysis</strong> — alert triage, detection engineering, incident response</li>
+  <li><strong>CTF Competitions</strong> — mostly web, pwn, and crypto</li>
+  <li><strong>Offensive Security</strong> — actively studying and labbing</li>
+  <li><strong>Certifications</strong> — Security+, PenTest+</li>
+</ul>
 
----
+<hr>
 
-## Skills
+<h2>Skills</h2>
 
 <div class="skills-grid">
   <div class="skill-card">
@@ -67,10 +69,10 @@ I go by **homestarfuzzer** online.
   </div>
 </div>
 
----
+<hr>
 
-## Contact
+<h2>Contact</h2>
 
-The best way to reach me is through [GitHub](https://github.com/homestarfuzzer).
+<p>The best way to reach me is through <a href="https://github.com/homestarfuzzer">GitHub</a>.</p>
 
 </div>
