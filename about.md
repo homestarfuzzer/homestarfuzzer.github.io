@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About
-description: Austin McNett: SOC analyst, CTF player, perpetual learner.
+description: Austin McNett - SOC analyst, CTF player, perpetual learner.
 permalink: /about/
 ---
 
