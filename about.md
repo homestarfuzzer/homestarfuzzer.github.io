@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About
-description: Austin McNett — security analyst, CTF player, perpetual learner.
+description: Austin McNett: SOC analyst, CTF player, perpetual learner.
 permalink: /about/
 ---
 
@@ -49,10 +49,10 @@ permalink: /about/
   <div class="skill-card">
     <span class="skill-card__label">Tools</span>
     <ul class="skill-card__items">
-      <li>Burp Suite</li>
       <li>Splunk ES</li>
       <li>CrowdStrike Falcon</li>
       <li>Nmap</li>
+      <li>Burp Suite</li>
     </ul>
   </div>
   <div class="skill-card">
