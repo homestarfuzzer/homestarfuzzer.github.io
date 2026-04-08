@@ -8,16 +8,16 @@ title: homestarfuzzer
   <h1 class="hero__name">Austin McNett</h1>
   <p class="hero__handle">homestarfuzzer</p>
   <p class="hero__bio">
-    SOC Analyst by day, aspiring pentester by night. This is where I document
-    writeups, notes, and things I've learned along the way.
+    I triage alerts for a living and break boxes for fun. This is where I write about both.
   </p>
   <div class="hero__cta">
-    <a class="btn btn--primary" href="{{ '/writeups/' | relative_url }}">// View Writeups</a>
+    <a class="btn btn--primary" href="{{ '/posts/' | relative_url }}">// View Posts</a>
     <a class="btn btn--ghost" href="{{ '/about/' | relative_url }}">About Me</a>
   </div>
 </section>
 
 <div class="container">
+
   <div class="stats-strip">
     <div class="stat">
       <span class="stat__number">{{ site.writeups | size }}</span>
@@ -29,21 +29,22 @@ title: homestarfuzzer
     </div>
   </div>
 
-  {%- assign recent_writeups = site.writeups | sort: 'date' | reverse | limit: 4 -%}
+  {%- assign recent_writeups = site.writeups | sort: 'date' | reverse | limit: 3 -%}
   {%- if recent_writeups.size > 0 %}
-    <div class="section-header">
-      <h2 class="section-title">Recent Writeups</h2>
-      <a class="section-link" href="{{ '/writeups/' | relative_url }}">View all &rarr;</a>
-    </div>
-    {% include post-list.html posts=recent_writeups type="writeup" %}
+  <div class="section-header">
+    <h2 class="section-title">Recent Writeups</h2>
+    <a class="section-link" href="{{ '/posts/' | relative_url }}">View all &rarr;</a>
+  </div>
+  {% include post-list.html posts=recent_writeups type="writeup" %}
   {%- endif %}
 
   {%- assign recent_posts = site.posts | limit: 3 -%}
   {%- if recent_posts.size > 0 %}
-    <div class="section-header" style="margin-top: 3rem;">
-      <h2 class="section-title">Latest Posts</h2>
-      <a class="section-link" href="{{ '/blog/' | relative_url }}">View all &rarr;</a>
-    </div>
-    {% include post-list.html posts=recent_posts type="post" %}
+  <div class="section-header" style="margin-top: 3rem;">
+    <h2 class="section-title">Latest Posts</h2>
+    <a class="section-link" href="{{ '/posts/' | relative_url }}">View all &rarr;</a>
+  </div>
+  {% include post-list.html posts=recent_posts type="post" %}
   {%- endif %}
+
 </div>
