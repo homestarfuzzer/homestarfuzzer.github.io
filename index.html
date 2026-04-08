@@ -29,5 +29,39 @@ title: homestarfuzzer
     </div>
   </div>
 
+  {%- assign all_recent = site.writeups | concat: site.posts | sort: 'date' | reverse | limit: 4 -%}
+  {%- if all_recent.size > 0 %}
+
+  <div class="section-header">
+    <h2 class="section-title">Recent</h2>
+    <a class="section-link" href="{{ '/posts/' | relative_url }}">View all &rarr;</a>
+  </div>
+
+  <div class="recent-grid">
+    {%- for item in all_recent -%}
+      {%- if item.collection == 'writeups' -%}
+        {%- assign item_type = 'writeup' -%}
+        {%- assign type_label = 'Writeup' -%}
+      {%- else -%}
+        {%- assign item_type = 'post' -%}
+        {%- assign type_label = 'Blog' -%}
+      {%- endif -%}
+      <a class="recent-card recent-card--{{ item_type }}" href="{{ item.url | relative_url }}">
+        <div class="recent-card__top">
+          <span class="post-card__type-badge post-card__type-badge--{{ item_type }}">{{ type_label }}</span>
+          {%- if item.difficulty %}
+            <span class="difficulty difficulty--{{ item.difficulty | downcase }}">{{ item.difficulty }}</span>
+          {%- endif %}
+        </div>
+        <h3 class="recent-card__title">{{ item.title }}</h3>
+        {%- if item.excerpt %}
+          <p class="recent-card__excerpt">{{ item.excerpt | strip_html | truncate: 100 }}</p>
+        {%- endif %}
+        <time class="recent-card__date">{{ item.date | date: "%b %-d, %Y" }}</time>
+      </a>
+    {%- endfor -%}
+  </div>
+
+  {%- endif %}
 
 </div>
