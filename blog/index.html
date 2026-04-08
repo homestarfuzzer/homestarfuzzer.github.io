@@ -1,43 +1,14 @@
 ---
-layout: default
-title: Blog
-description: Thoughts on security, tools, and learnings.
+layout: null
 permalink: /blog/
 ---
-
-<div class="container">
-  <div class="page__header">
-    <h1 class="page__title">Blog</h1>
-    <p class="page__desc">Notes, learnings, and thoughts from the field.</p>
-  </div>
-
-  {%- if paginator.posts.size > 0 %}
-    {% include post-list.html posts=paginator.posts type="post" %}
-
-    {%- if paginator.total_pages > 1 %}
-      <nav class="pagination" aria-label="Pagination">
-        {%- if paginator.previous_page %}
-          <a href="{{ paginator.previous_page_path | relative_url }}">&larr; Newer</a>
-        {%- endif %}
-
-        {%- for i in (1..paginator.total_pages) %}
-          {%- if i == paginator.page %}
-            <span class="current">{{ i }}</span>
-          {%- else %}
-            <a href="{{ site.paginate_path | replace: ':num', i | relative_url }}">{{ i }}</a>
-          {%- endif %}
-        {%- endfor %}
-
-        {%- if paginator.next_page %}
-          <a href="{{ paginator.next_page_path | relative_url }}">Older &rarr;</a>
-        {%- endif %}
-      </nav>
-    {%- endif %}
- {%- elsif site.posts.size > 0 %}
-    {% include post-list.html posts=site.posts type="post" %}
-  {%- else %}
-    <p style="color: var(--text-muted); font-family: var(--font-mono);">
-      // No posts yet. Check back soon.
-    </p>
-  {%- endif %}
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=/posts/">
+  <title>Redirecting...</title>
+  <script>window.location.replace('/posts/');</script>
+</head>
+<body><p>Redirecting to <a href="/posts/">Posts</a>...</p></body>
+</html>
