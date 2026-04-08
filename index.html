@@ -29,22 +29,5 @@ title: homestarfuzzer
     </div>
   </div>
 
-  {%- assign recent_writeups = site.writeups | sort: 'date' | reverse | limit: 3 -%}
-  {%- if recent_writeups.size > 0 %}
-  <div class="section-header">
-    <h2 class="section-title">Recent Writeups</h2>
-    <a class="section-link" href="{{ '/posts/' | relative_url }}">View all &rarr;</a>
-  </div>
-  {% include post-list.html posts=recent_writeups type="writeup" %}
-  {%- endif %}
-
-  {%- assign recent_posts = site.posts | limit: 3 -%}
-  {%- if recent_posts.size > 0 %}
-  <div class="section-header" style="margin-top: 3rem;">
-    <h2 class="section-title">Latest Posts</h2>
-    <a class="section-link" href="{{ '/posts/' | relative_url }}">View all &rarr;</a>
-  </div>
-  {% include post-list.html posts=recent_posts type="post" %}
-  {%- endif %}
 
 </div>

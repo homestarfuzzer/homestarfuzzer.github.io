@@ -14,8 +14,8 @@ author:
     Security researcher. I find bugs, break things, and write about it.
   email: ""            # optional â fill in or leave blank
   github: homestarfuzzer
-  twitter: ""          # optional
-  linkedin: "https://linkedin.com/in/austinmcnett"
+  twitter: ~           # optional
+  linkedin: "austinmcnett"
 
 # âââ Build ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 theme: null            # we use a fully custom theme
