@@ -1,0 +1,126 @@
+---
+layout: default
+title: Posts
+---
+
+<div class="container">
+
+  <div class="page-header">
+    <h1 class="page-title">Posts</h1>
+    <p class="page-subtitle">Writeups, notes, tools &mdash; everything in one place.</p>
+  </div>
+
+  <div class="filter-bar">
+    <div class="filter-toggles" role="group" aria-label="Filter by type">
+      <button class="toggle-btn active" data-filter="all">All</button>
+      <button class="toggle-btn" data-filter="writeup">Writeups</button>
+      <button class="toggle-btn" data-filter="post">Blog</button>
+    </div>
+    <div class="filter-tags" id="tag-filters" aria-label="Filter by tag"></div>
+  </div>
+
+  <div class="post-list" id="post-list">
+    {%- assign all_items = site.writeups | concat: site.posts | sort: 'date' | reverse -%}
+    {%- for item in all_items -%}
+      {%- if item.collection == 'writeups' -%}
+        {%- assign item_type = 'writeup' -%}
+        {%- assign type_label = 'Writeup' -%}
+      {%- else -%}
+        {%- assign item_type = 'post' -%}
+        {%- assign type_label = 'Blog' -%}
+      {%- endif -%}
+      {%- assign tag_str = item.tags | join: ',' | downcase -%}
+      <article class="post-card" data-type="{{ item_type }}" data-tags="{{ tag_str }}">
+        <div class="post-card__meta-top">
+          <span class="post-card__type-badge post-card__type-badge--{{ item_type }}">{{ type_label }}</span>
+          {%- if item.platform %}<span class="post-card__platform">{{ item.platform }}</span>{%- endif %}
+          {%- if item.difficulty %}
+            <span class="difficulty difficulty--{{ item.difficulty | downcase }}">{{ item.difficulty }}</span>
+          {%- endif %}
+        </div>
+        <h2 class="post-card__title">
+          <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+        </h2>
+        {%- if item.excerpt %}
+          <p class="post-card__excerpt">{{ item.excerpt | strip_html | truncate: 200 }}</p>
+        {%- endif %}
+        <div class="post-card__footer">
+          <time class="post-card__date" datetime="{{ item.date | date_to_xmlschema }}">
+            {{ item.date | date: "%b %-d, %Y" }}
+          </time>
+          {%- if item.tags %}
+            <div class="post-card__tags">
+              {%- for tag in item.tags %}
+                <span class="tag">{{ tag }}</span>
+              {%- endfor %}
+            </div>
+          {%- endif %}
+        </div>
+      </article>
+    {%- endfor -%}
+  </div>
+
+  <p class="no-results" id="no-results" style="display:none;">No posts match that filter.</p>
+
+</div>
+
+<script>
+(function () {
+  var cards   = Array.from(document.querySelectorAll('.post-card'));
+  var toggles = document.querySelectorAll('.toggle-btn');
+  var tagBox  = document.getElementById('tag-filters');
+  var noRes   = document.getElementById('no-results');
+  var activeType = 'all';
+  var activeTag  = null;
+
+  // Build tag buttons from unique tags across all cards
+  var seen = [];
+  cards.forEach(function(card) {
+    card.dataset.tags.split(',').forEach(function(t) {
+      var tag = t.trim();
+      if (tag && seen.indexOf(tag) === -1) seen.push(tag);
+    });
+  });
+  seen.forEach(function(tag) {
+    var btn = document.createElement('button');
+    btn.className = 'tag-filter-btn';
+    btn.dataset.tag = tag;
+    btn.textContent = tag;
+    btn.addEventListener('click', function() {
+      if (activeTag === tag) {
+        activeTag = null;
+        btn.classList.remove('active');
+      } else {
+        document.querySelectorAll('.tag-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+        activeTag = tag;
+        btn.classList.add('active');
+      }
+      applyFilters();
+    });
+    tagBox.appendChild(btn);
+  });
+
+  // Type toggles
+  toggles.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      toggles.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeType = btn.dataset.filter;
+      applyFilters();
+    });
+  });
+
+  function applyFilters() {
+    var visible = 0;
+    cards.forEach(function(card) {
+      var typeOk = activeType === 'all' || card.dataset.type === activeType;
+      var cardTags = card.dataset.tags.split(',').map(function(t) { return t.trim(); });
+      var tagOk = !activeTag || cardTags.indexOf(activeTag) !== -1;
+      var show = typeOk && tagOk;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    noRes.style.display = visible === 0 ? 'block' : 'none';
+  }
+})();
+</script>
