@@ -1,4 +1,4 @@
-# âââ Site Settings ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# Site Settings
 title: "homestarfuzzer"
 tagline: "hacker. builder. breaker."
 description: >-
@@ -12,18 +12,18 @@ author:
   handle: homestarfuzzer
   bio: >-
     Security researcher. I find bugs, break things, and write about it.
-  email: ""            # optional â fill in or leave blank
+  email: ""
   github: homestarfuzzer
-  twitter: ~           # optional
+  twitter: ~
   linkedin: "austinmcnett"
 
-# âââ Build ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-theme: null            # we use a fully custom theme
+# Build
+theme: null
 permalink: /:year/:month/:day/:title/
 paginate: 10
 paginate_path: "/blog/page/:num/"
 
-# âââ Markdown âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# Markdown
 markdown: kramdown
 highlighter: rouge
 kramdown:
@@ -32,20 +32,20 @@ kramdown:
   syntax_highlighter_opts:
     css_class: "highlight"
 
-# âââ Plugins ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# Plugins
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-paginate
 
-# âââ Collections ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# Collections
 collections:
   writeups:
     output: true
     permalink: /writeups/:name/
 
-# âââ Defaults âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# Defaults
 defaults:
   - scope:
       path: ""
@@ -60,7 +60,7 @@ defaults:
       layout: "writeup"
       author: "Austin McNett"
 
-# âââ Exclude from build âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# Exclude from build
 exclude:
   - Gemfile
   - Gemfile.lock
@@ -69,7 +69,7 @@ exclude:
   - node_modules
   - vendor
 
-# âââ SEO / Feed âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# SEO / Feed
 twitter:
   username: ""
 logo: /assets/img/avatar.png
