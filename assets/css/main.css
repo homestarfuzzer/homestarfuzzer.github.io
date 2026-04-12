@@ -197,7 +197,8 @@ ul, ol { padding-left: 1.5rem; }
   margin-bottom: 1.5rem;
 }
 
-.hero__handle::before { content: "$ whoami  \2192  "; color: var(--color-text-muted); }
+.hero__handle-prefix { color: var(--color-text-muted); }
+.hero__handle-prefix a:hover { text-decoration: none; }
 
 .hero__name a,
 .hero__handle a {
