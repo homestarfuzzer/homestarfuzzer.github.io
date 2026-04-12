@@ -5,7 +5,7 @@ date: 2026-03-15
 category: HackTheBox
 difficulty: Easy
 ctf: HackTheBox
-tags: [lfi, path-hijacking, linux, privesc]
+tags: [ctf]
 tools: [nmap, curl, burp-suite, bash]
 description: >
   A Linux box running a Ruby Sinatra app with hardcoded credentials exposed in

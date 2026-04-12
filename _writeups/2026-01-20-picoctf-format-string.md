@@ -5,7 +5,7 @@ date: 2026-01-20
 category: CTF
 difficulty: Medium
 ctf: PicoCTF 2025
-tags: [pwn, format-string, binary-exploitation, ctf]
+tags: [ctf]
 tools: [pwntools, gdb, pwndbg, python]
 description: >
   A classic format string vulnerability in a 64-bit ELF binary with partial RELRO
