@@ -12,21 +12,21 @@ title: homestarfuzzer
   </p>
   <div class="hero__cta">
     <a class="btn btn--primary" href="{{ '/posts/' | relative_url }}">// View Posts</a>
+    <div class="hero__stats">
+      <a class="hero__stat" href="{{ '/posts/' | relative_url }}?type=writeup">
+        <span class="hero__stat-num">{{ site.writeups | size }}</span>
+        <span class="hero__stat-label">Writeups</span>
+      </a>
+      <span class="hero__stat-sep">&middot;</span>
+      <a class="hero__stat" href="{{ '/posts/' | relative_url }}?type=post">
+        <span class="hero__stat-num">{{ site.posts | size }}</span>
+        <span class="hero__stat-label">Blog Posts</span>
+      </a>
+    </div>
   </div>
 </section>
 
 <div class="container">
-
-  <div class="stats-strip">
-    <div class="stat">
-      <span class="stat__number">{{ site.writeups | size }}</span>
-      <span class="stat__label">Writeups</span>
-    </div>
-    <div class="stat">
-      <span class="stat__number">{{ site.posts | size }}</span>
-      <span class="stat__label">Blog Posts</span>
-    </div>
-  </div>
 
   {%- assign all_pool = site.writeups | concat: site.posts | sort: 'date' | reverse -%}
   {%- if all_pool.size > 0 %}

@@ -134,5 +134,16 @@ title: Posts
     });
     noRes.style.display = visible === 0 ? 'block' : 'none';
   }
+
+  // activate filter from ?type= URL param (used by homepage stat links)
+  var urlType = new URLSearchParams(window.location.search).get('type');
+  if (urlType) {
+    toggles.forEach(function(btn) {
+      var match = btn.dataset.filter === urlType;
+      btn.classList.toggle('active', match);
+      if (match) activeType = urlType;
+    });
+    applyFilters();
+  }
 })();
 </script>
