@@ -210,7 +210,6 @@ ul, ol { padding-left: 1.5rem; }
 .hero__bio {
   font-size: 1.15rem;
   color: var(--color-text-muted);
-  max-width: 580px;
   margin-bottom: 2rem;
   line-height: 1.75;
 }
