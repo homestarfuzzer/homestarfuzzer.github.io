@@ -866,7 +866,8 @@ pre code {
     padding: 1.5rem;
   }
   .site-nav.is-open { display: block; }
-  .site-nav__list { flex-direction: column; gap: 1rem; }
+  .site-nav__list { flex-direction: column; gap: 0; }
+  .site-nav__link { display: block; padding: 12px 0; }
   .site-header__menu-toggle { display: flex; }
   .post__nav { grid-template-columns: 1fr; }
   .hero { padding-block: 3rem 2rem; }
