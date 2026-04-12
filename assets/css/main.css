@@ -952,6 +952,7 @@ pre:hover .copy-btn { opacity: 1; }
 .post-list { display: flex; flex-direction: column; gap: 0.6rem; }
 
 .post-card {
+  position: relative;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-left: 3px solid transparent;
@@ -989,6 +990,7 @@ pre:hover .copy-btn { opacity: 1; }
   line-height: 1.35;
 }
 .post-card__title a { color: var(--text); text-decoration: none; transition: color 0.15s ease; }
+.post-card__title a::after { content: ''; position: absolute; inset: 0; z-index: 1; }
 .post-card[data-type="writeup"]:hover .post-card__title a { color: var(--accent); }
 .post-card[data-type="post"]:hover    .post-card__title a { color: var(--accent-blue); }
 
