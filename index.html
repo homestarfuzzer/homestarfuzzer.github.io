@@ -12,7 +12,6 @@ title: homestarfuzzer
   </p>
   <div class="hero__cta">
     <a class="btn btn--primary" href="{{ '/posts/' | relative_url }}">// View Posts</a>
-    <a class="btn btn--ghost" href="{{ '/about/' | relative_url }}">About Me</a>
   </div>
 </section>
 
@@ -29,38 +28,112 @@ title: homestarfuzzer
     </div>
   </div>
 
-  {%- assign all_recent = site.writeups | concat: site.posts | sort: 'date' | reverse | limit: 4 -%}
-  {%- if all_recent.size > 0 %}
+  {%- assign all_pool = site.writeups | concat: site.posts | sort: 'date' | reverse -%}
+  {%- if all_pool.size > 0 %}
+
+  <script id="posts-data" type="application/json">
+  [
+    {%- for item in all_pool -%}
+    {
+      "url":        {{ item.url | relative_url | jsonify }},
+      "type":       "{% if item.collection == 'writeups' %}writeup{% else %}post{% endif %}",
+      "typeLabel":  "{% if item.collection == 'writeups' %}Writeup{% else %}Blog{% endif %}",
+      "title":      {{ item.title | jsonify }},
+      "excerpt":    {{ item.excerpt | strip_html | truncate: 100 | jsonify }},
+      "date":       "{{ item.date | date: '%b %-d, %Y' }}",
+      "difficulty": {{ item.difficulty | jsonify }}
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+  </script>
 
   <div class="section-header">
     <h2 class="section-title">Recent</h2>
     <a class="section-link" href="{{ '/posts/' | relative_url }}">View all &rarr;</a>
   </div>
 
-  <div class="recent-grid">
-    {%- for item in all_recent -%}
-      {%- if item.collection == 'writeups' -%}
-        {%- assign item_type = 'writeup' -%}
-        {%- assign type_label = 'Writeup' -%}
-      {%- else -%}
-        {%- assign item_type = 'post' -%}
-        {%- assign type_label = 'Blog' -%}
-      {%- endif -%}
-      <a class="recent-card recent-card--{{ item_type }}" href="{{ item.url | relative_url }}">
-        <div class="recent-card__top">
-          <span class="post-card__type-badge post-card__type-badge--{{ item_type }}">{{ type_label }}</span>
-          {%- if item.difficulty %}
-            <span class="difficulty difficulty--{{ item.difficulty | downcase }}">{{ item.difficulty }}</span>
-          {%- endif %}
-        </div>
-        <h3 class="recent-card__title">{{ item.title }}</h3>
-        {%- if item.excerpt %}
-          <p class="recent-card__excerpt">{{ item.excerpt | strip_html | truncate: 100 }}</p>
-        {%- endif %}
-        <time class="recent-card__date">{{ item.date | date: "%b %-d, %Y" }}</time>
-      </a>
-    {%- endfor -%}
-  </div>
+  <div class="recent-grid" id="recent-grid"></div>
+
+  <script>
+  (function () {
+    var dataEl = document.getElementById('posts-data');
+    var grid   = document.getElementById('recent-grid');
+    if (!dataEl || !grid) return;
+
+    var all = JSON.parse(dataEl.textContent);
+    if (all.length === 0) return;
+
+    // Fisher-Yates shuffle then take 3
+    var pool = all.slice();
+    for (var i = pool.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = pool[i]; pool[i] = pool[j]; pool[j] = t;
+    }
+    var picks = pool.slice(0, 3);
+
+    // Depth: front card is fully opaque, further cards recede
+    var baseOpacity = [1, 0.4, 0.15];
+
+    picks.forEach(function (item, idx) {
+      var a = document.createElement('a');
+      a.className = 'recent-card recent-card--' + item.type;
+      a.href = item.url;
+      a.style.setProperty('--base-opacity', baseOpacity[idx]);
+
+      var top = document.createElement('div');
+      top.className = 'recent-card__top';
+
+      var badge = document.createElement('span');
+      badge.className = 'post-card__type-badge post-card__type-badge--' + item.type;
+      badge.textContent = item.typeLabel;
+      top.appendChild(badge);
+
+      if (item.difficulty) {
+        var diff = document.createElement('span');
+        diff.className = 'difficulty difficulty--' + item.difficulty.toLowerCase();
+        diff.textContent = item.difficulty;
+        top.appendChild(diff);
+      }
+
+      var title = document.createElement('h3');
+      title.className = 'recent-card__title';
+      title.textContent = item.title;
+
+      var date = document.createElement('time');
+      date.className = 'recent-card__date';
+      date.textContent = item.date;
+
+      a.appendChild(top);
+      a.appendChild(title);
+
+      if (item.excerpt) {
+        var exc = document.createElement('p');
+        exc.className = 'recent-card__excerpt';
+        exc.textContent = item.excerpt;
+        a.appendChild(exc);
+      }
+
+      a.appendChild(date);
+      grid.appendChild(a);
+    });
+
+    // Staggered scroll-reveal via IntersectionObserver
+    var cards = grid.querySelectorAll('.recent-card');
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var card = entry.target;
+        var idx  = Array.from(cards).indexOf(card);
+        setTimeout(function () {
+          card.classList.add('is-visible');
+        }, idx * 130);
+        observer.unobserve(card);
+      });
+    }, { threshold: 0.1 });
+
+    cards.forEach(function (card) { observer.observe(card); });
+  })();
+  </script>
 
   {%- endif %}
 
