@@ -58,7 +58,9 @@ permalink: /about/
     <ul class="skill-card__items">
       <li>Web App Pentesting</li>
       <li>Network Exploitation</li>
-      <li>Reverse Engineering</li>
+      <li>Privilege Escalation</li>
+      <li>OSINT</li>
+
     </ul>
   </div>
   <div class="skill-card">
@@ -105,7 +107,7 @@ permalink: /about/
     </p>
     <p style="font-family:var(--font-mono);font-size:0.88rem;margin:0">
       <span style="color:var(--color-accent);margin-right:0.6rem">&gt;</span>
-      <span style="color:var(--color-text)">attending RVAsec — soaking up the Deep Dives track</span><span class="cursor">_</span>
+      <span style="color:var(--color-text)">Organizing the RVAsec Deep Dives monthly</span><span class="cursor">_</span>
     </p>
   </div>
 </div>
