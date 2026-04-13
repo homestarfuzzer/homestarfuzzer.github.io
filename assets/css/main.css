@@ -389,10 +389,13 @@ ul, ol { padding-left: 1.5rem; }
 
 /* Ã¢ÂÂÃ¢ÂÂ Tags Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ */
 .tag {
-  display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px;
+  display: inline-block; padding: 0.15rem 0.55rem; border-radius: 4px;
   font-size: 0.72rem; font-family: var(--font-mono);
-  background: var(--tag-blog-bg); color: var(--tag-blog-text); border: 1px solid var(--tag-blog-text);
+  background: transparent; color: var(--color-text-muted); border: 1px solid var(--color-border);
 }
+.tag[data-tag="ctf"]      { color: var(--tag-ctf-text);      border-color: var(--tag-ctf-text); }
+.tag[data-tag="tools"]    { color: var(--tag-tools-text);    border-color: var(--tag-tools-text); }
+.tag[data-tag="research"] { color: var(--tag-research-text); border-color: var(--tag-research-text); }
 
 /* Ã¢ÂÂÃ¢ÂÂ Difficulty badges Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ */
 .difficulty {
@@ -1010,6 +1013,7 @@ pre:hover .copy-btn { opacity: 1; }
   flex-wrap: wrap;
 }
 .post-card__badges { display: flex; align-items: center; gap: 0.35rem; flex-wrap: nowrap; }
+.post-card__badges .difficulty { font-size: 0.65rem; padding: 0.12rem 0.45rem; margin-bottom: 0; }
 
 .post-card__date {
   font-size: 0.73rem;

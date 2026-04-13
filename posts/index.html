@@ -63,7 +63,7 @@ title: Posts
         {%- if item.tags %}
           <div class="post-card__tags">
             {%- for tag in item.tags %}
-              <span class="tag">{{ tag }}</span>
+              <span class="tag" data-tag="{{ tag | downcase }}">{{ tag }}</span>
             {%- endfor %}
           </div>
         {%- endif %}

@@ -15,7 +15,7 @@ layout: default
         {%- if page.tags.size > 0 %}
           <span class="post__tags">
             {%- for tag in page.tags %}
-              <span class="tag">{{ tag }}</span>
+              <span class="tag" data-tag="{{ tag | downcase }}">{{ tag }}</span>
             {%- endfor %}
           </span>
         {%- endif %}
