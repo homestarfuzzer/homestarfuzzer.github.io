@@ -4,31 +4,7 @@
    Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ */
 
 /* Ã¢ÂÂÃ¢ÂÂ Custom Properties Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ */
-/* THEME: terminal-green - commented out, swap back by uncommenting */
-/*
-:root {
-  --bg:             #0d1117;
-  --bg-secondary:   #161b22;
-  --bg-card:        #1a2030;
-  --border:         #30363d;
-  --border-hover:   #58a6ff;
-  --text:           #e6edf3;
-  --text-muted:     #8b949e;
-  --text-faint:     #484f58;
-  --accent:         #39d353;
-  --accent-blue:    #58a6ff;
-  --accent-orange:  #f78166;
-  --accent-yellow:  #e3b341;
-  --accent-purple:  #bc8cff;
-  --font-mono:      "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
-  --font-sans:      "Inter", system-ui, -apple-system, sans-serif;
-  --container:      1100px;
-  --gap:            1.5rem;
-  --radius:         6px;
-  --radius-lg:      12px;
-  --transition:     200ms ease;
-}
-*/
+/* Alternate themes: see _themes/ directory */
 
 /* THEME: forest-aqua-violet - active */
 :root {
@@ -1033,7 +1009,7 @@ pre:hover .copy-btn { opacity: 1; }
   gap: 1rem;
   flex-wrap: wrap;
 }
-.post-card__badges { display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap; }
+.post-card__badges { display: flex; align-items: center; gap: 0.35rem; flex-wrap: nowrap; }
 
 .post-card__date {
   font-size: 0.73rem;

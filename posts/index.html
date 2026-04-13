@@ -55,8 +55,9 @@ title: Posts
           <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
         </h2>
 
-        {%- if item.excerpt %}
-          <p class="post-card__excerpt">{{ item.excerpt | strip_html | truncate: 160 }}</p>
+        {%- assign card_desc = item.description | default: item.excerpt -%}
+        {%- if card_desc %}
+          <p class="post-card__excerpt">{{ card_desc | strip_html | truncate: 220 }}</p>
         {%- endif %}
 
         {%- if item.tags %}

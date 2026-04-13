@@ -70,8 +70,6 @@ exclude:
   - vendor
 
 # SEO / Feed
-twitter:
-  username: ""
 logo: /assets/img/avatar.png
 feed:
   path: feed.xml

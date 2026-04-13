@@ -1,0 +1,38 @@
+/*
+  THEME: terminal-green
+  ─────────────────────
+  GitHub-dark-inspired green accent theme.
+
+  To activate:
+    1. Copy the :root block below into assets/css/main.css,
+       replacing the current :root block (forest-aqua-violet).
+    2. Search main.css for any hardcoded hex values that belong
+       to the old theme and update them to match.
+    3. Update syntax.css if you want the code block colours to match.
+
+  To add a new theme: drop another file in this directory using the
+  same :root-only format, one theme per file.
+*/
+
+:root {
+  --bg:             #0d1117;
+  --bg-secondary:   #161b22;
+  --bg-card:        #1a2030;
+  --border:         #30363d;
+  --border-hover:   #58a6ff;
+  --text:           #e6edf3;
+  --text-muted:     #8b949e;
+  --text-faint:     #484f58;
+  --accent:         #39d353;
+  --accent-blue:    #58a6ff;
+  --accent-orange:  #f78166;
+  --accent-yellow:  #e3b341;
+  --accent-purple:  #bc8cff;
+  --font-mono:      "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+  --font-sans:      "Inter", system-ui, -apple-system, sans-serif;
+  --container:      1100px;
+  --gap:            1.5rem;
+  --radius:         6px;
+  --radius-lg:      12px;
+  --transition:     200ms ease;
+}
