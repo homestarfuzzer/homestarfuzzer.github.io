@@ -15,7 +15,6 @@ permalink: /about/
 <div style="max-width:720px">
 
 <!-- ─── Identity ─────────────────────────────────────────────────── -->
-<p class="hero__eyebrow">// session init</p>
 <p class="hero__handle">
   <span class="hero__handle-prefix">$ whoami&nbsp;&nbsp;&#8594;&nbsp;&nbsp;</span>homestarfuzzer
 </p>
@@ -53,7 +52,7 @@ permalink: /about/
   <span class="section-title">Skills</span>
 </div>
 
-<div class="skills-grid" style="margin-bottom:2.5rem">
+<div class="skills-grid" style="margin-bottom:2.5rem;grid-template-columns:repeat(2,1fr)">
   <div class="skill-card">
     <span class="skill-card__label" style="color:var(--color-accent)">Offensive</span>
     <ul class="skill-card__items">
@@ -92,7 +91,7 @@ permalink: /about/
 
 <!-- ─── Now ───────────────────────────────────────────────────────── -->
 <div class="section-header" style="margin-bottom:0.75rem">
-  <span class="section-title">// now</span>
+  <span class="section-title">now</span>
 </div>
 
 <div class="toc" style="margin-bottom:2.5rem">
@@ -102,15 +101,11 @@ permalink: /about/
   <div style="display:flex;flex-direction:column;gap:0.55rem">
     <p style="font-family:var(--font-mono);font-size:0.88rem;margin:0">
       <span style="color:var(--color-accent);margin-right:0.6rem">&gt;</span>
-      <span style="color:var(--color-text)">studying for OSCP</span>
+      <span style="color:var(--color-text)">grinding HTB Season 10</span>
     </p>
     <p style="font-family:var(--font-mono);font-size:0.88rem;margin:0">
       <span style="color:var(--color-accent);margin-right:0.6rem">&gt;</span>
-      <span style="color:var(--color-text)">grinding HTB Pro Labs + THM paths</span>
-    </p>
-    <p style="font-family:var(--font-mono);font-size:0.88rem;margin:0">
-      <span style="color:var(--color-accent);margin-right:0.6rem">&gt;</span>
-      <span style="color:var(--color-text)">building EZ-SOC — a Splunk-like SIEM training lab</span><span class="cursor">_</span>
+      <span style="color:var(--color-text)">attending RVAsec — soaking up the Deep Dives track</span><span class="cursor">_</span>
     </p>
   </div>
 </div>
@@ -120,9 +115,8 @@ permalink: /about/
   <span class="section-title">Contact</span>
 </div>
 
-<p class="hero__eyebrow" style="margin-bottom:0.85rem">// reach me via:</p>
-<a class="btn btn--ghost" href="https://github.com/homestarfuzzer" style="font-family:var(--font-mono);font-size:0.9rem">
-  $ github.com/homestarfuzzer
+<a class="btn btn--ghost" href="https://linkedin.com/in/austinmcnett" style="font-family:var(--font-mono);font-size:0.9rem">
+  $ linkedin.com/in/austinmcnett
 </a>
 
 </div>
