@@ -160,7 +160,7 @@ details[open] .summary__chevron { transform: rotate(180deg); }
 
 <div style="margin-bottom:2.5rem">
 
-  <details open>
+  <details>
     <summary>
       <span class="summary__label">Defensive</span>
       <span class="summary__chevron">▼</span>
@@ -226,7 +226,7 @@ index=windows source="WinEventLog:Security" EventCode=4688
 
 <div style="margin-bottom:2.5rem">
 
-  <details open>
+  <details>
     <summary>
       <span class="summary__label">Tools & Projects</span>
       <span class="summary__chevron">▼</span>
