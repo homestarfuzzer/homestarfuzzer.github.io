@@ -122,7 +122,7 @@ details[open] .summary__chevron { transform: rotate(180deg); }
   <span class="hero__handle-prefix">$ whoami&nbsp;&nbsp;&#8594;&nbsp;&nbsp;</span>homestarfuzzer
 </p>
 <p style="color:var(--color-text-muted);font-size:1.05rem;line-height:1.75;margin-bottom:2.5rem">
-  SOC analyst by day — fully remote, four environments, always on. I spend my time triaging alerts, writing SPL, and figuring out why something fired before it becomes someone else's problem. Outside of that I'm studying offensive security, grinding CTFs, doing independent hardware research, and building tools that scratch itches. Writing about what sticks.
+  SOC analyst by day. Fully remote, four environments, always on. I spend my time triaging alerts, writing SPL, and figuring out why something fired before it becomes someone else's problem. Outside of that I'm studying offensive security, grinding CTFs, doing independent hardware research, and building tools that scratch itches. Writing about what sticks.
 </p>
 
 <!-- ─── Day to Day ────────────────────────────────────────────────── -->
@@ -141,11 +141,11 @@ details[open] .summary__chevron { transform: rotate(180deg); }
   </div>
   <div style="display:flex;gap:1.25rem;padding:0.65rem 0;border-bottom:1px solid var(--color-border);align-items:baseline">
     <span style="font-family:var(--font-mono);color:var(--color-accent);min-width:170px;font-size:0.85rem;flex-shrink:0">IOC Analysis</span>
-    <span style="color:var(--color-text-muted);font-size:0.95rem">CrowdStrike Falcon — host telemetry, command history, IOC correlation, process graph investigation</span>
+    <span style="color:var(--color-text-muted);font-size:0.95rem">CrowdStrike Falcon: host telemetry, command history, IOC correlation, process graph investigation</span>
   </div>
   <div style="display:flex;gap:1.25rem;padding:0.65rem 0;border-bottom:1px solid var(--color-border);align-items:baseline">
     <span style="font-family:var(--font-mono);color:var(--color-accent);min-width:170px;font-size:0.85rem;flex-shrink:0">Query Writing</span>
-    <span style="color:var(--color-text-muted);font-size:0.95rem">SPL in Splunk ES, regularly — pivoting on users, hosts, targets, processes to reconstruct activity</span>
+    <span style="color:var(--color-text-muted);font-size:0.95rem">SPL in Splunk ES daily, pivoting on users, hosts, targets, and processes to reconstruct activity</span>
   </div>
   <div style="display:flex;gap:1.25rem;padding:0.65rem 0;align-items:baseline">
     <span style="font-family:var(--font-mono);color:var(--color-accent);min-width:170px;font-size:0.85rem;flex-shrink:0">Tuning</span>
@@ -167,10 +167,10 @@ details[open] .summary__chevron { transform: rotate(180deg); }
     </summary>
     <div class="accordion__body">
       <ul>
-        <li><span class="li__label">SIEM</span> Splunk ES — alert triage, SPL query writing, dashboard investigation</li>
-        <li><span class="li__label">EDR</span> CrowdStrike Falcon — host analysis, process trees, IOC hunting, graph pivoting</li>
+        <li><span class="li__label">SIEM</span> Splunk ES: alert triage, SPL query writing, dashboard investigation</li>
+        <li><span class="li__label">EDR</span> CrowdStrike Falcon: host analysis, process trees, IOC hunting, graph pivoting</li>
         <li><span class="li__label">Detection</span> alert tuning, false positive reduction, escalation criteria</li>
-        <li><span class="li__label">Case Mgmt</span> RegScale, SharePoint/SIR — escalation workflows across multi-environment SOC</li>
+        <li><span class="li__label">Case Mgmt</span> RegScale, SharePoint/SIR - escalation workflows across multi-environment SOC</li>
         <li><span class="li__label">IR</span> incident scoping, containment recommendations, timeline reconstruction</li>
       </ul>
       <div class="spl-block">&#x2F;&#x2F; typical SPL pattern
@@ -188,11 +188,11 @@ index=windows source="WinEventLog:Security" EventCode=4688
     </summary>
     <div class="accordion__body">
       <ul>
-        <li><span class="li__label">Web</span> SQLi, XSS, auth bypass, API abuse — PortSwigger labs, HTB web challenges</li>
-        <li><span class="li__label">Network</span> enumeration, service exploitation — nmap, Metasploit, Impacket</li>
-        <li><span class="li__label">PrivEsc</span> Windows and Linux privilege escalation — WinPEAS, LinPEAS, manual review</li>
+        <li><span class="li__label">Web</span> SQLi, XSS, auth bypass, API abuse via PortSwigger labs and HTB web challenges</li>
+        <li><span class="li__label">Network</span> enumeration and service exploitation with nmap, Metasploit, Impacket</li>
+        <li><span class="li__label">PrivEsc</span> Windows and Linux privilege escalation using WinPEAS, LinPEAS, manual review</li>
         <li><span class="li__label">OSINT</span> passive recon, target profiling, face-matching workflows</li>
-        <li><span class="li__label">Hardware</span> BLE research — nRF52840, GATT enumeration, firmware flashing, passive sniffing</li>
+        <li><span class="li__label">Hardware</span> BLE research: nRF52840, GATT enumeration, firmware flashing, passive sniffing</li>
         <li><span class="li__label">Certs</span> Security+, PenTest+</li>
       </ul>
     </div>
@@ -205,12 +205,12 @@ index=windows source="WinEventLog:Security" EventCode=4688
     </summary>
     <div class="accordion__body">
       <ul>
-        <li><span class="li__label">Splunk ES</span> primary SIEM — SPL, correlation searches, dashboards</li>
-        <li><span class="li__label">CrowdStrike</span> Falcon EDR — daily driver for host investigation</li>
+        <li><span class="li__label">Splunk ES</span> primary SIEM: SPL, correlation searches, dashboards</li>
+        <li><span class="li__label">CrowdStrike</span> Falcon EDR, daily driver for host investigation</li>
         <li><span class="li__label">Burp Suite</span> web app testing, intercepting proxy</li>
         <li><span class="li__label">Nmap</span> network discovery, service enumeration</li>
         <li><span class="li__label">Metasploit</span> exploitation framework, Meterpreter post-ex</li>
-        <li><span class="li__label">Impacket</span> Windows protocol tooling — mssqlclient, secretsdump</li>
+        <li><span class="li__label">Impacket</span> Windows protocol tooling: mssqlclient, secretsdump</li>
         <li><span class="li__label">Wireshark</span> packet capture and protocol analysis</li>
         <li><span class="li__label">HTB / THM</span> active lab platforms for skill development</li>
       </ul>
@@ -234,15 +234,15 @@ index=windows source="WinEventLog:Security" EventCode=4688
     <div class="accordion__body">
       <div class="tool-row">
         <span class="tool-row__name"><a href="https://github.com/homestarfuzzer/iocinfo">iocinfo</a></span>
-        <span class="tool-row__desc">CLI IOC enrichment — queries VirusTotal, AbuseIPDB, Shodan, and free sources in one view</span>
+        <span class="tool-row__desc">CLI IOC enrichment: queries VirusTotal, AbuseIPDB, Shodan, and free sources in one view</span>
       </div>
       <div class="tool-row">
         <span class="tool-row__name"><a href="https://github.com/homestarfuzzer/BYOB">BYOB</a></span>
-        <span class="tool-row__desc">one-click vulnerable lab launcher — 12+ targets (web, API, network, CTF) via local Docker dashboard</span>
+        <span class="tool-row__desc">one-click vulnerable lab launcher with 12+ targets (web, API, network, CTF) via local Docker dashboard</span>
       </div>
       <div class="tool-row">
         <span class="tool-row__name"><a href="https://homestarfuzzer.github.io/nmapguide/">nmapguide</a></span>
-        <span class="tool-row__desc">interactive nmap command builder — 9 sections, 34+ playbook commands, NSE browser, rustscan tab</span>
+        <span class="tool-row__desc">interactive nmap command builder: 9 sections, 34+ playbook commands, NSE browser, rustscan tab</span>
       </div>
     </div>
   </details>
@@ -261,11 +261,11 @@ index=windows source="WinEventLog:Security" EventCode=4688
   <div style="display:flex;flex-direction:column;gap:0.55rem">
     <p style="font-family:var(--font-mono);font-size:0.88rem;margin:0">
       <span style="color:var(--color-accent);margin-right:0.6rem">&gt;</span>
-      <span style="color:var(--color-text)">grinding HTB — active machines and season challenges</span>
+      <span style="color:var(--color-text)">grinding HTB: active machines and season challenges</span>
     </p>
     <p style="font-family:var(--font-mono);font-size:0.88rem;margin:0">
       <span style="color:var(--color-accent);margin-right:0.6rem">&gt;</span>
-      <span style="color:var(--color-text)">BLE hardware research — nRF52840, GATT enumeration</span>
+      <span style="color:var(--color-text)">BLE hardware research: nRF52840, GATT enumeration</span>
     </p>
     <p style="font-family:var(--font-mono);font-size:0.88rem;margin:0">
       <span style="color:var(--color-accent);margin-right:0.6rem">&gt;</span>
