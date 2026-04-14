@@ -1091,6 +1091,7 @@ pre:hover .copy-btn { opacity: 1; }
 .recent-card--post:hover    { border-left-color: var(--color-hover); background: var(--color-hover-dim); }
 
 .recent-card__top    { display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.5rem; }
+.recent-card__top .difficulty { font-size: 0.65rem; padding: 0.12rem 0.45rem; margin-bottom: 0; }
 .recent-card__title  {
   font-size: 0.95rem;
   font-weight: 600;
